@@ -35,6 +35,20 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Transactional
+    @PostMapping("/user/newInstructor")
+    public ResponseEntity newInstructor(@RequestBody @Valid NewInstructorUserDTO newInstructor) {
+        if(userRepository.existsByEmail(newInstructor.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorItemDTO("email", "Email já cadastrado no sistema"));
+        }
+
+        User user = newInstructor.toModel();
+        userRepository.save(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
     @GetMapping("/user/all")
     public List<UserListItemDTO> listAllUsers() {
         return userRepository.findAll().stream().map(UserListItemDTO::new).toList();
