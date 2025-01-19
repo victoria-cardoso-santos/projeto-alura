@@ -1,6 +1,7 @@
 package br.com.alura.ProjetoAlura.course;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import br.com.alura.ProjetoAlura.user.User;
 import jakarta.persistence.Column;
@@ -34,7 +35,10 @@ public class Course {
     private Status status = Status.ACTIVE;
 
     @Column(name = "inactivation_date")
-    private LocalDate inactivationDate;
+    private LocalDateTime inactivationDate;
+
+    public Course() {
+    }
 
     public Course(String code, String name, User instructor, String description) {
         this.code = code;
@@ -55,8 +59,12 @@ public class Course {
         return description;
     }
 
-    public LocalDate getInactivationDate() {
+    public LocalDateTime getInactivationDate() {
         return inactivationDate;
+    }
+
+    public void setInactivationDate(LocalDateTime inactivationDate) {
+        this.inactivationDate = inactivationDate;
     }
 
     public User getInstructor() {
@@ -66,5 +74,10 @@ public class Course {
     public Status getStatus() {
         return status;
     }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+    
 
 }

@@ -2,6 +2,7 @@ package br.com.alura.ProjetoAlura.course;
 
 import jakarta.validation.Valid;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,9 @@ import br.com.alura.ProjetoAlura.user.User;
 import br.com.alura.ProjetoAlura.user.UserRepository;
 import br.com.alura.ProjetoAlura.util.ErrorItemDTO;
 
-import static br.com.alura.ProjetoAlura.user.Role.INSTRUCTOR;;
+import static br.com.alura.ProjetoAlura.user.Role.INSTRUCTOR;
+import static br.com.alura.ProjetoAlura.course.Status.INACTIVE;
+
 
 
 @RestController
@@ -60,6 +63,14 @@ public class CourseController {
     @PostMapping("/course/{code}/inactive")
     public ResponseEntity createCourse(@PathVariable("code") String courseCode) {
         // TODO: Implementar a Questão 2 - Inativação de Curso aqui...
+        if(!courseRepository.existsByCode(courseCode)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                   .body(new ErrorItemDTO("code", "Código do curso informado no sistema."));
+       }
+       Course course = courseRepository.findByCode(courseCode).get();
+       course.setStatus(INACTIVE);
+       course.setInactivationDate(LocalDateTime.now());
+       courseRepository.save(course);
 
         return ResponseEntity.ok().build();
     }
