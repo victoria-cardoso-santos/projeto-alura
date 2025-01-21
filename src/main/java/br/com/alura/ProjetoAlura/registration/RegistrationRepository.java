@@ -2,6 +2,7 @@ package br.com.alura.ProjetoAlura.registration;
 
 import org.springframework.stereotype.Repository;
 
+import br.com.alura.ProjetoAlura.course.Course;
 import br.com.alura.ProjetoAlura.user.User;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
-   boolean existsByUser(User user);
+   boolean existsByUserAndCourse(User user, Course course);
 
    @Query(value = """
     SELECT 

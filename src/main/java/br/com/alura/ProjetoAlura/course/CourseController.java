@@ -32,7 +32,7 @@ public class CourseController {
 
     @PostMapping("/course/new")
     public ResponseEntity createCourse(@Valid @RequestBody NewCourseDTO newCourse) {
-        // TODO: Implementar a Questão 1 - Cadastro de Cursos aqui...
+
         if(courseRepository.existsByCode(newCourse.getCode())) {
              return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorItemDTO("code", "Código do curso já cadastrado no sistema."));
@@ -60,7 +60,7 @@ public class CourseController {
 
     @PostMapping("/course/{code}/inactive")
     public ResponseEntity createCourse(@PathVariable("code") String courseCode) {
-        // TODO: Implementar a Questão 2 - Inativação de Curso aqui...
+
         if(!courseRepository.existsByCode(courseCode)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                    .body(new ErrorItemDTO("code", "Código do curso informado no sistema."));

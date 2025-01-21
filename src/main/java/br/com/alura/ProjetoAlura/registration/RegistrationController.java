@@ -15,7 +15,6 @@ import br.com.alura.ProjetoAlura.user.User;
 import br.com.alura.ProjetoAlura.user.UserRepository;
 import br.com.alura.ProjetoAlura.util.ErrorItemDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -34,7 +33,6 @@ public class RegistrationController {
 
     @PostMapping("/registration/new")
     public ResponseEntity createCourse(@Valid @RequestBody NewRegistrationDTO newRegistration) {
-        // TODO: Implementar a Questão 3 - Criação de Matrículas aqui...
 
         Optional<User> userOptional = userRepository.findByEmail(newRegistration.getStudentEmail());
         Optional<Course> courseOptional = courseRepository.findByCode(newRegistration.getCourseCode());
@@ -43,7 +41,7 @@ public class RegistrationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorItemDTO("email", "E-mail do estudante não encontrado no sistema"));
         }
-        if(registrationRepository.existsByUser(userOptional.get())) {
+        if(registrationRepository.existsByUserAndCourse(userOptional.get(),courseOptional.get())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorItemDTO("email", "E-mail do estudante já cadastrado no curso."));
         }
