@@ -1,13 +1,18 @@
 package br.com.alura.ProjetoAlura.registration;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class NewRegistrationDTO {
 
-    @NotBlank
     @NotNull
+    @NotBlank
+    @Length(min = 4, max = 10)
+    @Pattern(regexp = "^[a-zA-Z-]+$", message = "O código deve conter apenas letras e hífens, sem espaços, números ou outros caracteres.")
     private String courseCode;
 
     @NotBlank

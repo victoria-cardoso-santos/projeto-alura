@@ -41,19 +41,22 @@ public class RegistrationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorItemDTO("email", "E-mail do estudante não encontrado no sistema"));
         }
+        
+        if(!courseOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorItemDTO("code", "Código do curso não encontrado no sistema"));
+        }
+
+        if(courseOptional.get().getStatus() == Status.INACTIVE) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorItemDTO("course", "Só é permitido matrícula em cursos ativos."));
+        }
+
         if(registrationRepository.existsByUserAndCourse(userOptional.get(),courseOptional.get())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorItemDTO("email", "E-mail do estudante já cadastrado no curso."));
         }
 
-        if(!courseOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorItemDTO("código", "Código do curso não encontrado no sistema"));
-        }
-        if(courseOptional.get().getStatus() == Status.INACTIVE) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorItemDTO("curso", "Só é permitido matrícula em cursos ativos."));
-        }
 
         Registration registration = new Registration(userOptional.get(), courseOptional.get());
         registrationRepository.save(registration);
