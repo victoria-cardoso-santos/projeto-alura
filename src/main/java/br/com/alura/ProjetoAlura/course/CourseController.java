@@ -19,8 +19,6 @@ import br.com.alura.ProjetoAlura.util.ErrorItemDTO;
 import static br.com.alura.ProjetoAlura.user.Role.INSTRUCTOR;
 import static br.com.alura.ProjetoAlura.course.Status.INACTIVE;
 
-
-
 @RestController
 public class CourseController {
 

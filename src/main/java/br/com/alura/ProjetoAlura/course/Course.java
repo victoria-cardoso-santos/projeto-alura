@@ -1,6 +1,5 @@
 package br.com.alura.ProjetoAlura.course;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import br.com.alura.ProjetoAlura.user.User;
